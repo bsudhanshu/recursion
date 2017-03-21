@@ -7,4 +7,22 @@
 var getElementsByClassName = function(className
 ) {
   // your code here
+  var result = [];
+  if (document.body.className === className) {
+  	result.push(document.body);
+  }
+
+  var collectMatchingNodes = function (node) {
+    if (node.hasChildNodes()) {
+      for (var i = 0; i < node.children.length; i++) {
+        collectMatchingNodes(node.children[i]);
+      }
+    } else {
+      if (node.classList.contains(className)) {
+        result.push(node);
+      }
+    }
+    return result;
+  }
+  return collectMatchingNodes(document.body);
 };
