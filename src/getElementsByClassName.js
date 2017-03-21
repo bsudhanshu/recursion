@@ -6,23 +6,21 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className
 ) {
-  // your code here
-  var result = [];
-  if (document.body.className === className) {
-  	result.push(document.body);
-  }
-
+  
   var collectMatchingNodes = function (node) {
+    var result = [];
+    if (node.classList.contains(className)) {
+        result.push(node);
+    }
+
     if (node.hasChildNodes()) {
       for (var i = 0; i < node.children.length; i++) {
-        collectMatchingNodes(node.children[i]);
-      }
-    } else {
-      if (node.classList.contains(className)) {
-        result.push(node);
+        result = result.concat(collectMatchingNodes(node.children[i]));
       }
     }
+
     return result;
   }
+
   return collectMatchingNodes(document.body);
 };
